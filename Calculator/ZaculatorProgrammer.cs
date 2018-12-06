@@ -30,7 +30,7 @@ namespace Calculator
         {
             Button currentButton = (Button)sender;
             functions.AddDigit(currentButton.Text);
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -46,7 +46,7 @@ namespace Calculator
         private void buttonNegate_Click(object sender, EventArgs e)
         {
             functions.Negate();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -54,7 +54,7 @@ namespace Calculator
         private void buttonClear_Click(object sender, EventArgs e)
         {
             functions.Clear();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -62,7 +62,7 @@ namespace Calculator
         private void buttonClearEntry_Click(object sender, EventArgs e)
         {
             functions.ClearEntry();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -71,7 +71,7 @@ namespace Calculator
         private void buttonBackspace_Click(object sender, EventArgs e)
         {
             functions.Backspace();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -89,7 +89,7 @@ namespace Calculator
 
             functions.Operation(operationText);
 
-            display.Text = functions.preEntry;
+            display.Text = functions.PreEntry;
             buttonEquals.Focus();
         }
 
@@ -97,7 +97,7 @@ namespace Calculator
         private void buttonEquals_Click(object sender, EventArgs e)
         {
             functions.Equals();
-            display.Text = functions.preEntry;
+            display.Text = functions.PreEntry;
             buttonEquals.Focus();
         }
 
@@ -214,7 +214,7 @@ namespace Calculator
                 case Keys.Decimal:
                     {
                         functions.AddDecimal();
-                        display.Text = functions.entry;
+                        display.Text = functions.Entry;
                         break;
                     }
                 case Keys.Add:
@@ -244,13 +244,13 @@ namespace Calculator
                 case Keys.Back:
                     {
                         functions.Backspace();
-                        display.Text = functions.entry;
+                        display.Text = functions.Entry;
                         break;
                     }
                 case Keys.Enter:
                     {
                         functions.Equals();
-                        display.Text = functions.entry;
+                        display.Text = functions.Entry;
                         break;
                     }
             }
@@ -264,7 +264,7 @@ namespace Calculator
         private void ModuloButton_Click(object sender, EventArgs e)
         {
             functions.Mod();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -275,7 +275,7 @@ namespace Calculator
             enableHex(false);
 
             functions.changeBase("bin");
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         private void OctRadio_CheckedChanged(object sender, EventArgs e)
@@ -285,7 +285,7 @@ namespace Calculator
             enableHex(false);
 
             functions.changeBase("oct");
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         private void DecRadio_CheckedChanged(object sender, EventArgs e)
@@ -295,7 +295,7 @@ namespace Calculator
             enableHex(false);
 
             functions.changeBase("dec");
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         private void HexRadio_CheckedChanged(object sender, EventArgs e)
@@ -305,7 +305,7 @@ namespace Calculator
             enableHex(true);
 
             functions.changeBase("hex");
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // helper method to enable/disable hex

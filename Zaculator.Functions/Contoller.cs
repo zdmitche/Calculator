@@ -8,101 +8,123 @@ namespace Zaculator.Engine
 {
     public class Controller
     {
-        // public so it can be called by Zaculator/ScientificZaculator
-        public string entry;
-        public string preEntry;
-        public string operation;
-        public bool degreeSelected; //used for determining whether to use degrees or radians
+        /// <summary>
+        /// The current entry in the calculator
+        /// </summary>
+        public string Entry { get; set; }
 
-        // private because they're not needed by Zaculator
-        private bool first; //used for starting a chain of operations
-        private bool overwrite; //used for ovewriting an entry after pressing equals
+        /// <summary>
+        /// The previous entry in the calculator
+        /// </summary>
+        public string PreEntry { get; set; }
+
+        /// <summary>
+        /// The string representing the current operation
+        /// </summary>
+        public string operation;
+
+        /// <summary>
+        /// Used for determining whether to use degrees or radians
+        /// </summary>
+        public bool DegreeSelected { get; set; }
+
+        private bool first; // used for starting a chain of operations
+        private bool overwrite; // used for ovewriting an entry after pressing equals
         private bool enteredNum; //checked to see if a number has been entered before applying an operator
-        public string numBase; // used for determing which number base is being used
+        private string numBase; // used for determing which number base is being used
         private string preEntryBase;
 
         public Controller()
         {
-            preEntry = "0";
-            entry = "0";
+            PreEntry = "0";
+            Entry = "0";
             first = true;
             overwrite = false;
-            degreeSelected = true;
+            DegreeSelected = true;
             enteredNum = false;
             numBase = "dec";
         }
 
-        //----------------------------------------------------------------------------
-        //-------------------------Start of simple calculator-------------------------
-        //----------------------------------------------------------------------------
-
-        // adds current number button to display
+        /// <summary>
+        /// Adds number button to display
+        /// </summary>
+        /// <param name="buttonText"></param>
         public void AddDigit(string buttonText)
         {
-            if (overwrite || entry == "0")
+            if (overwrite || Entry == "0")
             {
-                entry = buttonText;
+                Entry = buttonText;
                 overwrite = false;
             }
             else
             {
-                entry = entry + buttonText;
+                Entry = Entry + buttonText;
             }
             enteredNum = true;
         }
 
-        // adds a decimal
+        // Adds a decimal to display
         public void AddDecimal()
         {
-            if (entry == "0" || overwrite)
+            if (Entry == "0" || overwrite)
             {
-                entry = "0.";
+                Entry = "0.";
                 overwrite = false;
             }
-            else if (!entry.Contains("."))
-                entry += ".";
+            else if (!Entry.Contains("."))
+                Entry += ".";
         }
 
-        // negates entry
+        /// <summary>
+        /// Negates entry
+        /// </summary>
         public void Negate()
         {
-            if (entry.Contains("-"))
-                entry = entry.Substring(1, entry.Length - 1);
+            if (Entry.Contains("-"))
+                Entry = Entry.Substring(1, Entry.Length - 1);
             else
-                entry = "-" + entry;
+                Entry = "-" + Entry;
         }
 
-        // clears everything
+        /// <summary>
+        /// Clears the calculator
+        /// </summary>
         public void Clear()
         {
-            preEntry = "0";
-            entry = "0";
+            PreEntry = "0";
+            Entry = "0";
             first = true;
             overwrite = false;
         }
 
-        // clears only entry
+        /// <summary>
+        /// Clears only the entry
+        /// </summary>
         public void ClearEntry()
         {
-            entry = "0";
+            Entry = "0";
         }
 
-        // takes away a character from the display unless the display
-        // already has a lenth of 1
+        /// <summary>
+        /// Takes away a character from the display unless the display already has a lenth of 1
+        /// </summary>
         public void Backspace()
         {
-            if (entry.Length == 1)
+            if (Entry.Length == 1)
                 return;
-            entry = entry.Substring(0, entry.Length - 1);
+            Entry = Entry.Substring(0, Entry.Length - 1);
         }
 
-        // applies an operator to preEntry and entry
+        /// <summary>
+        /// Applies an operator to preEntry and entry
+        /// </summary>
+        /// <param name="operationText">Text representing the operation</param>
         public void Operation(string operationText)
         {
             if (numBase != "dec")
             {
-                entry = ProgrammerFunctions.ConvertBase(entry, numBase, "dec");
-                preEntry = ProgrammerFunctions.ConvertBase(preEntry, preEntryBase, "dec");
+                Entry = ProgrammerFunctions.ConvertBase(Entry, numBase, "dec");
+                PreEntry = ProgrammerFunctions.ConvertBase(PreEntry, preEntryBase, "dec");
             }
 
             if (enteredNum)
@@ -110,77 +132,79 @@ namespace Zaculator.Engine
                 preEntryBase = numBase;
                 if (first)
                 {
-                    preEntry = entry;
+                    PreEntry = Entry;
                 }
                 else
                 {
                     if (operation == "+")
                     {
-                        preEntry = StandardFunctions.Add(preEntry, entry);
+                        PreEntry = StandardFunctions.Add(PreEntry, Entry);
                     }
                     else if (operation == "-")
                     {
-                        preEntry = StandardFunctions.Subtract(preEntry, entry);
+                        PreEntry = StandardFunctions.Subtract(PreEntry, Entry);
                     }
                     else if (operation == "*")
                     {
-                        preEntry = StandardFunctions.Multiply(preEntry, entry);
+                        PreEntry = StandardFunctions.Multiply(PreEntry, Entry);
                     }
                     else if (operation == "/")
                     {
-                        preEntry = StandardFunctions.Divide(preEntry, entry);
+                        PreEntry = StandardFunctions.Divide(PreEntry, Entry);
                     }
                 }
             }
 
             if (numBase != "dec")
             {
-                preEntry = ProgrammerFunctions.ConvertBase(preEntry, "dec", numBase);
+                PreEntry = ProgrammerFunctions.ConvertBase(PreEntry, "dec", numBase);
                 //preEntryBase = numBase;
             }
 
-            entry = "0";
+            Entry = "0";
             operation = operationText;
             first = false;
             enteredNum = false;
         }
 
-        // finds new display based on what the previous operator was
+        /// <summary>
+        /// Finds new display based on previous operator
+        /// </summary>
         public void Equals()
         {
             if (numBase != "dec")
             {
-                entry = ProgrammerFunctions.ConvertBase(entry, numBase, "dec");
-                preEntry = ProgrammerFunctions.ConvertBase(preEntry, preEntryBase, "dec");
+                Entry = ProgrammerFunctions.ConvertBase(Entry, numBase, "dec");
+                PreEntry = ProgrammerFunctions.ConvertBase(PreEntry, preEntryBase, "dec");
             }
 
             if (operation == "+")
-                entry = StandardFunctions.Add(preEntry, entry);
+                Entry = StandardFunctions.Add(PreEntry, Entry);
             else if (operation == "-")
-                entry = StandardFunctions.Subtract(preEntry, entry);
+                Entry = StandardFunctions.Subtract(PreEntry, Entry);
             else if (operation == "*")
-                entry = StandardFunctions.Multiply(preEntry, entry);
+                Entry = StandardFunctions.Multiply(PreEntry, Entry);
             else if (operation == "/")
-                entry = StandardFunctions.Divide(preEntry, entry);
+                Entry = StandardFunctions.Divide(PreEntry, Entry);
             else if (operation == "exp")
-                entry = ScientificFunctions.GenericExponent(preEntry, entry);
+                Entry = ScientificFunctions.GenericExponent(PreEntry, Entry);
             else if (operation == "root")
-                entry = ScientificFunctions.GenericRoot(preEntry, entry);
+                Entry = ScientificFunctions.GenericRoot(PreEntry, Entry);
             else if (operation == "log")
-                entry = ScientificFunctions.GenericLog(preEntry, entry);
+                Entry = ScientificFunctions.GenericLog(PreEntry, Entry);
             else if (operation == "power")
-                entry = ScientificFunctions.ScientificNotation(entry);
+                Entry = ScientificFunctions.ScientificNotation(Entry);
             else if (operation == "i")
-                entry = StandardFunctions.IntegerDivide(preEntry, entry);
+                Entry = StandardFunctions.IntegerDivide(PreEntry, Entry);
             else if (operation == "mod")
-                entry = StandardFunctions.Mod(preEntry, entry);
+                Entry = StandardFunctions.Mod(PreEntry, Entry);
 
-            preEntry = entry;
+            PreEntry = Entry;
 
             if (numBase != "dec")
             {
-                entry = ProgrammerFunctions.ConvertBase(entry, "dec", numBase);
-                preEntry = ProgrammerFunctions.ConvertBase(preEntry, "dec", numBase);
+                Entry = ProgrammerFunctions.ConvertBase(Entry, "dec", numBase);
+                PreEntry = ProgrammerFunctions.ConvertBase(PreEntry, "dec", numBase);
             }
 
             first = true;
@@ -189,31 +213,37 @@ namespace Zaculator.Engine
             enteredNum = false;
         }
 
-        // used to find the reciprocal (1/x)
+        /// <summary>
+        /// The reciprocal of entry (1/x)
+        /// </summary>
         public void Reciprocal()
         {
-            entry = StandardFunctions.Reciprocal(entry);
+            Entry = StandardFunctions.Reciprocal(Entry);
 
             first = true;
             enteredNum = true;
             overwrite = true;
         }
 
-        // used to find the square root
+        /// <summary>
+        /// Sqrt of entry
+        /// </summary>
         public void Sqrt()
         {
-            entry = StandardFunctions.Sqrt(entry);
+            Entry = StandardFunctions.Sqrt(Entry);
 
             first = true;
             enteredNum = true;
             overwrite = true;
         }
 
-        // calculates the percentage of the previous number (preEntry) mostly for
-        // the purpose of adding and subtracting percents
+        /// <summary>
+        /// Calculates the percentage of the previous number mostly for the purpose of adding 
+        /// and subtracting percents
+        /// </summary>
         public void Percent()
         {
-            entry = StandardFunctions.PercentOfNumber(preEntry, entry);
+            Entry = StandardFunctions.PercentOfNumber(PreEntry, Entry);
 
             first = true;
             enteredNum = true;
@@ -232,71 +262,87 @@ namespace Zaculator.Engine
 
         //-----------exponential-----------
 
-        // used to square an entry
+        /// <summary>
+        /// Squares entry
+        /// </summary>
         public void Square()
         {
-            entry = ScientificFunctions.Square(entry);
+            Entry = ScientificFunctions.Square(Entry);
             first = true;
             overwrite = true;
         }
 
-        // used to cube an entry
+        /// <summary>
+        /// Cubes entry
+        /// </summary>
         public void Cube()
         {
-            entry = ScientificFunctions.Cube(entry);
+            Entry = ScientificFunctions.Cube(Entry);
             first = true;
             overwrite = true;
         }
 
-        // raises the mathematical constant e to a number
+        /// <summary>
+        /// Raises the mathematical constant e to a number
+        /// </summary>
         public void NaturalExponent()
         {
-            entry = "" + Math.Exp(Double.Parse(entry));
+            Entry = "" + Math.Exp(Double.Parse(Entry));
             first = true;
             overwrite = true;
         }
 
-        // raises x to the power of y
+        /// <summary>
+        /// Raises x to the power of y
+        /// </summary>
         public void GenericExponent()
         {
-            preEntry = entry;
-            entry = "0";
+            PreEntry = Entry;
+            Entry = "0";
             operation = "exp";
         }
 
         //--------------root---------------
 
-        // takes the cubed root of a number
+        /// <summary>
+        /// Cube root of entry
+        /// </summary>
         public void CubeRoot()
         {
-            entry = "" + ScientificFunctions.CubedRoot(entry);
+            Entry = "" + ScientificFunctions.CubedRoot(Entry);
             first = true;
             overwrite = true;
         }
 
-        // takes the yth root of x
+        /// <summary>
+        /// Takes the yth root of x
+        /// </summary>
         public void GenericRoot()
         {
-            preEntry = entry;
-            entry = "0";
+            PreEntry = Entry;
+            Entry = "0";
             operation = "root";
         }
 
         //-----------logarithmic-----------
 
-        // takes the natural log of a number
+        /// <summary>
+        /// Natural log of entry
+        /// </summary>
         public void NaturalLog()
         {
-            entry = "" + ScientificFunctions.Ln(entry);
+            Entry = "" + ScientificFunctions.Ln(Entry);
             first = true;
             overwrite = true;
         }
 
-        // takes log base x of y
+        /// <summary>
+        /// Log base x of y
+        /// </summary>
         public void GenericLog()
         {
-            preEntry = entry;
-            entry = "0";
+            PreEntry = Entry;
+            Entry = "0";
             operation = "log";
         }
 
@@ -305,7 +351,7 @@ namespace Zaculator.Engine
         // takes the sine of the number in the selected angle units (rads/degrees)
         public void Sine()
         {
-            entry = ScientificFunctions.Sin(entry, degreeSelected);
+            Entry = ScientificFunctions.Sin(Entry, DegreeSelected);
             first = true;
             overwrite = true;
         }
@@ -313,7 +359,7 @@ namespace Zaculator.Engine
         // takes the cossine of the number in the selected angle units (rads/degrees)
         public void Cosine()
         {
-            entry = ScientificFunctions.Cos(entry, degreeSelected);
+            Entry = ScientificFunctions.Cos(Entry, DegreeSelected);
             first = true;
             overwrite = true;
         }
@@ -321,7 +367,7 @@ namespace Zaculator.Engine
         // takes the tangent of the number in the selected angle units (rads/degrees)
         public void Tangent()
         {
-            entry = ScientificFunctions.Tan(entry, degreeSelected);
+            Entry = ScientificFunctions.Tan(Entry, DegreeSelected);
             first = true;
             overwrite = true;
         }
@@ -329,7 +375,7 @@ namespace Zaculator.Engine
         // takes the inverse sine of the number and returns it in the selected angle units (rads/degrees)
         public void InverseSine()
         {
-            entry = ScientificFunctions.Arcsin(entry, degreeSelected);
+            Entry = ScientificFunctions.Arcsin(Entry, DegreeSelected);
             first = true;
             overwrite = true;
         }
@@ -337,7 +383,7 @@ namespace Zaculator.Engine
         // takes the inverse cosine of the number and returns it in the selected angle units (rads/degrees)
         public void InverseCosine()
         {
-            entry = ScientificFunctions.Arccos(entry, degreeSelected);
+            Entry = ScientificFunctions.Arccos(Entry, DegreeSelected);
             first = true;
             overwrite = true;
         }
@@ -345,7 +391,7 @@ namespace Zaculator.Engine
         // takes the inverse tangent of the number and returns it in the selected angle units (rads/degrees)
         public void InverseTangent()
         {
-            entry = ScientificFunctions.Arctan(entry, degreeSelected);
+            Entry = ScientificFunctions.Arctan(Entry, DegreeSelected);
             first = true;
             overwrite = true;
         }
@@ -355,7 +401,7 @@ namespace Zaculator.Engine
         // takes the hyperbolic sine of a number
         public void HyperbolicSine()
         {
-            entry = ScientificFunctions.Sinh(entry);
+            Entry = ScientificFunctions.Sinh(Entry);
             first = true;
             overwrite = true;
         }
@@ -363,7 +409,7 @@ namespace Zaculator.Engine
         // takes the hyperbolic cosine of a number
         public void HyperbolicCosine()
         {
-            entry = ScientificFunctions.Cosh(entry);
+            Entry = ScientificFunctions.Cosh(Entry);
             first = true;
             overwrite = true;
         }
@@ -371,7 +417,7 @@ namespace Zaculator.Engine
         // takes the hyperbolic tangent of a number
         public void HyperbolicTangent()
         {
-            entry = ScientificFunctions.Tanh(entry);
+            Entry = ScientificFunctions.Tanh(Entry);
             first = true;
             overwrite = true;
         }
@@ -381,7 +427,7 @@ namespace Zaculator.Engine
         // used to set entry equal to the mathematical constant pi
         public void PI()
         {
-            entry = "" + Math.PI;
+            Entry = "" + Math.PI;
             first = true;
             overwrite = true;
         }
@@ -389,7 +435,7 @@ namespace Zaculator.Engine
         // used to set entry equal to the mathematical constant e
         public void E()
         {
-            entry = "" + Math.E;
+            Entry = "" + Math.E;
             first = true;
             overwrite = true;
         }
@@ -406,14 +452,14 @@ namespace Zaculator.Engine
                 //return;
             //}
 
-            int num = (int)Double.Parse(entry);
+            int num = (int)Double.Parse(Entry);
             int total = 1;
             for (int i = num; i > 1; i--)
             {
                 total *= i;
             }
 
-            entry = "" + total;
+            Entry = "" + total;
             first = true;
             overwrite = true;
         }
@@ -421,9 +467,9 @@ namespace Zaculator.Engine
         // used to express entry in scientific notation
         public void EXP()
         {
-            if (entry.Contains("E"))
+            if (Entry.Contains("E"))
                 return;
-            entry += "E";
+            Entry += "E";
             operation = "power";
         }
 
@@ -449,7 +495,7 @@ namespace Zaculator.Engine
             string preNumBase = numBase;
             numBase = newBase;
 
-            entry = ProgrammerFunctions.ConvertBase(entry, preNumBase, numBase);
+            Entry = ProgrammerFunctions.ConvertBase(Entry, preNumBase, numBase);
 
             first = true;
             enteredNum = true;

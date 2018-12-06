@@ -31,7 +31,7 @@ namespace Calculator
         {
             Button currentButton = (Button)sender;
             functions.AddDigit(currentButton.Text);
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -39,7 +39,7 @@ namespace Calculator
         private void buttonDecimal_Click(object sender, EventArgs e)
         {
             functions.AddDecimal();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -47,7 +47,7 @@ namespace Calculator
         private void buttonNegate_Click(object sender, EventArgs e)
         {
             functions.Negate();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -55,7 +55,7 @@ namespace Calculator
         private void buttonClear_Click(object sender, EventArgs e)
         {
             functions.Clear();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -63,7 +63,7 @@ namespace Calculator
         private void buttonClearEntry_Click(object sender, EventArgs e)
         {
             functions.ClearEntry();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -72,7 +72,7 @@ namespace Calculator
         private void buttonBackspace_Click(object sender, EventArgs e)
         {
             functions.Backspace();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -90,7 +90,7 @@ namespace Calculator
 
             functions.Operation(operationText);
 
-            display.Text = functions.preEntry;
+            display.Text = functions.PreEntry;
             buttonEquals.Focus();
         }
 
@@ -98,7 +98,7 @@ namespace Calculator
         private void buttonEquals_Click(object sender, EventArgs e)
         {
             functions.Equals();
-            display.Text = functions.preEntry;
+            display.Text = functions.PreEntry;
             buttonEquals.Focus();
         }
 
@@ -106,7 +106,7 @@ namespace Calculator
         private void buttonReciprocal_Click(object sender, EventArgs e)
         {
             functions.Reciprocal();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -114,7 +114,7 @@ namespace Calculator
         private void buttonSquareRoot_Click(object sender, EventArgs e)
         {
             functions.Sqrt();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -123,7 +123,7 @@ namespace Calculator
         private void buttonPercent_Click(object sender, EventArgs e)
         {
             functions.Percent();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
             buttonEquals.Focus();
         }
 
@@ -215,7 +215,7 @@ namespace Calculator
                 case Keys.Decimal:
                     {
                         functions.AddDecimal();
-                        display.Text = functions.entry;
+                        display.Text = functions.Entry;
                         break;
                     }
                 case Keys.Add:
@@ -245,13 +245,13 @@ namespace Calculator
                 case Keys.Back:
                     {
                         functions.Backspace();
-                        display.Text = functions.entry;
+                        display.Text = functions.Entry;
                         break;
                     }
                 case Keys.Enter:
                     {
                         functions.Equals();
-                        display.Text = functions.entry;
+                        display.Text = functions.Entry;
                         break;
                     }
             }
@@ -269,21 +269,21 @@ namespace Calculator
         private void squaredButton_Click(object sender, EventArgs e)
         {
             functions.Square();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // used to cube an entry
         private void cubedButton_Click(object sender, EventArgs e)
         {
             functions.Cube();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // raises the mathematical constant e to a number
         private void naturalExponentialButton_Click(object sender, EventArgs e)
         {
             functions.NaturalExponent();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // raises x to the power of y
@@ -298,7 +298,7 @@ namespace Calculator
         private void cubedRootButton_Click(object sender, EventArgs e)
         {
             functions.CubeRoot();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the yth root of x
@@ -313,7 +313,7 @@ namespace Calculator
         private void naturalLogButton_Click(object sender, EventArgs e)
         {
             functions.NaturalLog();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes log base x of y
@@ -328,42 +328,42 @@ namespace Calculator
         private void sineButton_Click(object sender, EventArgs e)
         {
             functions.Sine();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the cossine of the number in the selected angle units (rads/degrees)
         private void cosineButton_Click(object sender, EventArgs e)
         {
             functions.Cosine();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the tangent of the number in the selected angle units (rads/degrees)
         private void tangentButton_Click(object sender, EventArgs e)
         {
             functions.Tangent();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the inverse sine of the number and returns it in the selected angle units (rads/degrees)
         private void inverseSineButton_Click(object sender, EventArgs e)
         {
             functions.InverseSine();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the inverse cosine of the number and returns it in the selected angle units (rads/degrees)
         private void inverseCosineButton_Click(object sender, EventArgs e)
         {
             functions.InverseCosine();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the inverse tangent of the number and returns it in the selected angle units (rads/degrees)
         private void inverseTangentButton_Click(object sender, EventArgs e)
         {
             functions.InverseTangent();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         //-----------hyperbolic------------
@@ -372,21 +372,21 @@ namespace Calculator
         private void hyperbolicSineButton_Click(object sender, EventArgs e)
         {
             functions.HyperbolicSine();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the hyperbolic cosine of a number
         private void hyperbolicCosineButton_Click(object sender, EventArgs e)
         {
             functions.HyperbolicCosine();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // takes the hyperbolic tangent of a number
         private void hyperbolicTangent_Click(object sender, EventArgs e)
         {
             functions.HyperbolicTangent();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         //------------constants------------
@@ -395,14 +395,14 @@ namespace Calculator
         private void piButton_Click(object sender, EventArgs e)
         {
             functions.PI();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // used to set entry equal to the mathematical constant e
         private void eButton_Click(object sender, EventArgs e)
         {
             functions.E();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         //--------------other--------------
@@ -411,28 +411,28 @@ namespace Calculator
         private void factorialButton_Click(object sender, EventArgs e)
         {
             functions.Factorial();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // used to express entry in scientific notation
         private void exponentButton_Click(object sender, EventArgs e)
         {
             functions.EXP();
-            display.Text = functions.entry;
+            display.Text = functions.Entry;
         }
 
         // used to use trig functions in terms of degrees;
         private void degreeButton_CheckedChanged(object sender, EventArgs e)
         {
-            functions.degreeSelected = true;
-            display.Text = functions.entry;
+            functions.DegreeSelected = true;
+            display.Text = functions.Entry;
         }
 
         // used to use trig functions in terms of radians;
         private void radianButton_CheckedChanged(object sender, EventArgs e)
         {
-            functions.degreeSelected = false;
-            display.Text = functions.entry;
+            functions.DegreeSelected = false;
+            display.Text = functions.Entry;
         }
 
         // used to display different functions
